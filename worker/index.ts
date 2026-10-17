@@ -19,7 +19,8 @@ function json(body: unknown, status = 200): Response {
 
 export async function handleContact(request: Request, env: Env): Promise<Response> {
   if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405);
-  if (request.headers.get('Origin') !== env.ALLOWED_ORIGIN) return json({ ok: false, error: 'forbidden' }, 403);
+  const allowed = env.ALLOWED_ORIGIN.split(',').map((o) => o.trim());
+  if (!allowed.includes(request.headers.get('Origin') ?? '')) return json({ ok: false, error: 'forbidden' }, 403);
   if (!request.headers.get('Content-Type')?.includes('application/json')) {
     return json({ ok: false, error: 'unsupported_media_type' }, 415);
   }

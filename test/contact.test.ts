@@ -54,6 +54,18 @@ describe('handleContact', () => {
     const r = req(valid, { headers: { Origin: 'https://evil.test', 'Content-Type': 'application/json' } });
     expect((await handleContact(r, env)).status).toBe(403);
   });
+  it('allows any origin in the comma-separated list', async () => {
+    mockFetch(true);
+    const multi = { ...env, ALLOWED_ORIGIN: 'https://a.test, https://b.test' };
+    for (const origin of ['https://a.test', 'https://b.test']) {
+      const r = req(valid, { headers: { Origin: origin, 'Content-Type': 'application/json' } });
+      expect((await handleContact(r, multi)).status).toBe(200);
+    }
+  });
+  it('403 when Origin header is missing', async () => {
+    const r = req(valid, { headers: { 'Content-Type': 'application/json' } });
+    expect((await handleContact(r, env)).status).toBe(403);
+  });
   it('400 for invalid JSON and invalid fields', async () => {
     mockFetch(true);
     expect((await handleContact(req('{oops'), env)).status).toBe(400);

@@ -10,10 +10,10 @@
     "run_worker_first": ["/api/*"]
   },
   // Non-secret settings. Secrets (RESEND_API_KEY, TURNSTILE_SECRET_KEY) are set
-  // with `wrangler secret put` or in the dashboard. Replace these before deploying.
+  // with `wrangler secret put` or in the dashboard. ALLOWED_ORIGIN is a comma-separated list. Replace CONTACT_TO before deploying.
   "vars": {
     "CONTACT_TO": "you@example.com",
-    "CONTACT_FROM": "mochipo <no-reply@mochipo.example.com>",
-    "ALLOWED_ORIGIN": "https://mochipo.example.com"
+    "CONTACT_FROM": "mochipo <no-reply@toki-mochi.com>",
+    "ALLOWED_ORIGIN": "https://toki-mochi.com,https://mochipo-web.toshimitsu-kugimoto.workers.dev"
   }
 }

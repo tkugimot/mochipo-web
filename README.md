@@ -63,8 +63,8 @@ npm run build    # 記事の frontmatter 不正はここで失敗する
 
 | 場所 | 項目 |
 |---|---|
-| `src/consts.ts` | `SITE_URL`(canonical / sitemap / robots.txt に使われる) |
-| `wrangler.jsonc` | `CONTACT_TO`, `CONTACT_FROM`, `ALLOWED_ORIGIN`(本番 URL) |
+| `src/consts.ts` | `SITE_URL`(現在 `https://toki-mochi.com`。canonical / sitemap / robots.txt に使われる) |
+| `wrangler.jsonc` | `CONTACT_TO`(仮の値)。`CONTACT_FROM` は Resend で toki-mochi.com を検証してから有効 |
 | `public/og-default.png` | OGP 既定画像(未作成) |
 
 ### 手順
@@ -91,4 +91,4 @@ npm run build    # 記事の frontmatter 不正はここで失敗する
 | `PUBLIC_TURNSTILE_SITE_KEY` | ビルド変数 | フォームのウィジェット |
 | `CONTACT_TO` | var | 受信先 |
 | `CONTACT_FROM` | var | 送信元(Resend 検証済みドメイン) |
-| `ALLOWED_ORIGIN` | var | Origin チェック用の本番 URL |
+| `ALLOWED_ORIGIN` | var | Origin チェック用の URL。カンマ区切りで複数指定可 |
