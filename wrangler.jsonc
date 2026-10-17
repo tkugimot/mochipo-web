@@ -10,11 +10,10 @@
     "run_worker_first": ["/api/*"]
   },
   // Non-secret settings. Secrets (RESEND_API_KEY, TURNSTILE_SECRET_KEY) are set
-  // with `wrangler secret put` or in the dashboard. ALLOWED_ORIGIN is a comma-separated list. TEMP: CONTACT_FROM uses Resend's test sender (can only send to the Resend account's own address).
-  // Switch to no-reply@toki-mochi.com after verifying the domain in Resend.
+  // with `wrangler secret put` or in the dashboard. ALLOWED_ORIGIN is a comma-separated list.
   "vars": {
     "CONTACT_TO": "tokimochi.dev@gmail.com",
-    "CONTACT_FROM": "mochipo <onboarding@resend.dev>",
+    "CONTACT_FROM": "mochipo <no-reply@toki-mochi.com>",
     "ALLOWED_ORIGIN": "https://toki-mochi.com,https://mochipo-web.toshimitsu-kugimoto.workers.dev"
   }
 }
