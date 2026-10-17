@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@layer base {
+  html { scroll-behavior: smooth; }
+}
+
+/* Typography for rendered Markdown (no extra plugin). */
+.prose h2 { @apply mt-10 mb-3 text-2xl font-bold; }
+.prose h3 { @apply mt-8 mb-2 text-xl font-semibold; }
+.prose p, .prose ul, .prose ol { @apply my-4 leading-8; }
+.prose ul { @apply list-disc pl-6; }
+.prose ol { @apply list-decimal pl-6; }
+.prose a { @apply text-blue-700 underline; }
+.prose pre { @apply my-4 overflow-x-auto rounded bg-slate-900 p-4 text-sm text-slate-100; }
+.prose code:not(pre code) { @apply rounded bg-slate-100 px-1 py-0.5 text-sm; }
+.prose blockquote { @apply my-4 border-l-4 border-slate-300 pl-4 text-slate-600; }

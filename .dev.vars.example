@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `wrangler dev`. Values below are Cloudflare's Turnstile test keys (always pass).
+RESEND_API_KEY=re_xxxxxxxx
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+ALLOWED_ORIGIN=http://localhost:8787

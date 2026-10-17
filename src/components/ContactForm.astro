@@ -1,0 +1,77 @@
+---
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<form id="contact-form" class="space-y-5" novalidate>
+  <div>
+    <label for="name" class="block text-sm font-medium">お名前</label>
+    <input id="name" name="name" required maxlength="100" autocomplete="name"
+      class="mt-1 w-full rounded border border-slate-300 px-3 py-2" />
+  </div>
+  <div>
+    <label for="email" class="block text-sm font-medium">メールアドレス</label>
+    <input id="email" name="email" type="email" required maxlength="254" autocomplete="email"
+      class="mt-1 w-full rounded border border-slate-300 px-3 py-2" />
+  </div>
+  <div>
+    <label for="message" class="block text-sm font-medium">お問い合わせ内容</label>
+    <textarea id="message" name="message" required minlength="10" maxlength="5000" rows="7"
+      class="mt-1 w-full rounded border border-slate-300 px-3 py-2"></textarea>
+  </div>
+  <!-- Honeypot -->
+  <div class="hidden" aria-hidden="true">
+    <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+  <div class="cf-turnstile" data-sitekey={siteKey}></div>
+  <button type="submit" class="w-full rounded bg-slate-900 px-5 py-3 text-white disabled:opacity-50 sm:w-auto">送信する</button>
+  <p id="form-status" role="status" aria-live="polite" class="text-sm"></p>
+  <noscript><p class="text-sm text-red-700">送信にはJavaScriptを有効にしてください。</p></noscript>
+</form>
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+  import { contactSchema } from '../lib/contactSchema';
+
+  const form = document.querySelector<HTMLFormElement>('#contact-form')!;
+  const status = document.querySelector<HTMLElement>('#form-status')!;
+  const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const input = {
+      name: data.get('name'),
+      email: data.get('email'),
+      message: data.get('message'),
+      website: data.get('website') ?? '',
+      turnstileToken: data.get('cf-turnstile-response') ?? '',
+    };
+    const parsed = contactSchema.safeParse(input);
+    if (!parsed.success) {
+      status.className = 'text-sm text-red-700';
+      status.textContent = parsed.error.issues[0].message;
+      return;
+    }
+    button.disabled = true;
+    status.className = 'text-sm';
+    status.textContent = '送信中…';
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(parsed.data),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      status.className = 'text-sm text-green-700';
+      status.textContent = '送信しました。ありがとうございます。';
+    } catch {
+      status.className = 'text-sm text-red-700';
+      status.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+    } finally {
+      button.disabled = false;
+      // Tokens are single-use; get a fresh one for any retry.
+      (window as any).turnstile?.reset();
+    }
+  });
+</script>
