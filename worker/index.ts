@@ -69,7 +69,11 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
       text: `お名前: ${safeName}\nメール: ${email}\n\n${message}`,
     }),
   });
-  if (!sent.ok) return json({ ok: false, error: 'send_failed' }, 502);
+  if (!sent.ok) {
+    // Resend's error body describes the failure only; it does not echo the message.
+    console.error('resend failed', sent.status, await sent.text());
+    return json({ ok: false, error: 'send_failed' }, 502);
+  }
 
   return json({ ok: true });
 }
