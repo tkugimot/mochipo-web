@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { slugOf } from '../lib/content';
+import { formatDate, langFromPath, localePath, t } from '../i18n/ui';
+
+interface Props { article: CollectionEntry<'articles'> }
+const { article } = Astro.props;
+const lang = langFromPath(Astro.url.pathname);
+const { title, description, pubDate, app } = article.data;
+---
+
+<article class="py-5">
+  <div class="flex items-center gap-3 text-sm text-slate-500">
+    <time datetime={pubDate.toISOString()}>{formatDate(pubDate, lang)}</time>
+    <span class="rounded bg-slate-100 px-2 py-0.5">{t(lang).apps[app]}</span>
+  </div>
+  <h2 class="mt-1 text-xl font-bold"><a href={localePath(lang, `/articles/${slugOf(article.id)}/`)} class="hover:underline">{title}</a></h2>
+  <p class="mt-1 text-slate-600">{description}</p>
+</article>

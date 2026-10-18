@@ -41,6 +41,7 @@ describe('contactSchema', () => {
     ['bad email', { ...valid, email: 'nope' }],
     ['short message', { ...valid, message: 'short' }],
     ['long message', { ...valid, message: 'a'.repeat(5001) }],
+    ['unknown topic', { ...valid, topic: 'x' }],
     ['filled honeypot', { ...valid, website: 'x' }],
     ['missing token', { ...valid, turnstileToken: '' }],
   ])('rejects %s', (_n, input) => expect(contactSchema.safeParse(input).success).toBe(false));
@@ -86,6 +87,7 @@ describe('handleContact', () => {
     const [, init] = f.mock.calls[1] as unknown as [string, RequestInit];
     const body = JSON.parse(init.body as string);
     expect(body).toMatchObject({ to: ['to@example.com'], reply_to: 'a@example.com' });
+    expect(body.subject).toContain('その他');
   });
   it('filled honeypot is rejected with 400 and no outbound call', async () => {
     const f = mockFetch(true);

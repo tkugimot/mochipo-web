@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { OPERATOR } from '../../consts';
+import { langFromPath, langStaticPaths } from '../../i18n/ui';
+
+export const getStaticPaths = langStaticPaths;
+
+// Placeholder copy: replace with the real "about us" text.
+const copy = {
+  ja: { title: '運営者情報', description: '時もち・もち歩の運営者についてご紹介します。', operator: '運営者', body: '【ここに運営者の紹介文】' },
+  en: { title: 'About us', description: 'About the developer of Time Rich and mochipo.', operator: 'Operator', body: '[About text goes here]' },
+};
+const c = copy[langFromPath(Astro.url.pathname)];
+---
+
+<BaseLayout title={c.title} description={c.description}>
+  <h1 class="text-3xl font-bold">{c.title}</h1>
+  <dl class="mt-6">
+    <dt class="text-sm text-slate-500">{c.operator}</dt>
+    <dd class="mt-1">{OPERATOR}</dd>
+  </dl>
+  <p class="mt-6 leading-8">{c.body}</p>
+</BaseLayout>

@@ -1,3 +1,4 @@
+import { z } from 'astro/zod';
 import { contactSchema } from '../src/lib/contactSchema';
 
 export interface Env {
@@ -9,6 +10,7 @@ export interface Env {
   ALLOWED_ORIGIN: string;
 }
 
+const TOPIC_LABELS = { tokimochi: '時もち', mochipo: 'もち歩', other: 'その他' } as const;
 const MAX_BODY_BYTES = 16 * 1024;
 const TURNSTILE_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const RESEND_URL = 'https://api.resend.com/emails';
@@ -37,9 +39,9 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
 
   const parsed = contactSchema.safeParse(payload);
   if (!parsed.success) {
-    return json({ ok: false, error: 'validation', fields: parsed.error.flatten().fieldErrors }, 400);
+    return json({ ok: false, error: 'validation', fields: z.flattenError(parsed.error).fieldErrors }, 400);
   }
-  const { name, email, message, turnstileToken } = parsed.data;
+  const { name, email, message, topic, turnstileToken } = parsed.data;
 
   const verify = await fetch(TURNSTILE_URL, {
     method: 'POST',
@@ -65,8 +67,8 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
       from: env.CONTACT_FROM,
       to: [env.CONTACT_TO],
       reply_to: email,
-      subject: `【お問い合わせ】${safeName}`,
-      text: `お名前: ${safeName}\nメール: ${email}\n\n${message}`,
+      subject: `【お問い合わせ:${TOPIC_LABELS[topic]}】${safeName}`,
+      text: `お名前: ${safeName}\nメール: ${email}\nアプリ: ${TOPIC_LABELS[topic]}\n\n${message}`,
     }),
   });
   if (!sent.ok) {

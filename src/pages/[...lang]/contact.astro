@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { langFromPath, langStaticPaths, t } from '../../i18n/ui';
+
+export const getStaticPaths = langStaticPaths;
+
+const ui = t(langFromPath(Astro.url.pathname)).contact;
+---
+
+<BaseLayout title={ui.title} description={ui.description}>
+  <h1 class="mb-6 text-3xl font-bold">{ui.title}</h1>
+  <ContactForm />
+</BaseLayout>

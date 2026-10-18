@@ -1,0 +1,15 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import { formatDate, langFromPath, t } from '../i18n/ui';
+
+interface Props { entry: CollectionEntry<'legal'> }
+const { entry } = Astro.props;
+const lang = langFromPath(Astro.url.pathname);
+const { Content } = await render(entry);
+const { title, effectiveDate, draft } = entry.data;
+---
+
+<h1 class="text-3xl font-bold">{title}</h1>
+{effectiveDate && <p class="mt-2 text-sm text-slate-500"><time datetime={effectiveDate.toISOString()}>{formatDate(effectiveDate, lang)}</time></p>}
+{draft && <p class="mt-4 rounded border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">{t(lang).draft.notice}</p>}
+<div class="prose mt-6"><Content /></div>

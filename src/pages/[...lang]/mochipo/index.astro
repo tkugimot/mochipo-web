@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { langFromPath, langStaticPaths, localePath } from '../../../i18n/ui';
+
+export const getStaticPaths = langStaticPaths;
+
+// Placeholder copy: replace with the real LP text.
+const copy = {
+  ja: {
+    name: 'もち歩',
+    title: 'もち歩',
+    description: 'もち歩の紹介ページです。',
+    tagline: '【キャッチコピー】',
+    lead: '【ここにアプリの説明文】',
+    features: ['【特徴1】', '【特徴2】', '【特徴3】'],
+    featuresTitle: 'もち歩の特徴',
+    terms: '利用規約',
+    privacy: 'プライバシーポリシー',
+  },
+  en: {
+    name: 'mochipo',
+    title: 'mochipo',
+    description: 'Introducing mochipo.',
+    tagline: '[Tagline]',
+    lead: '[App description goes here]',
+    features: ['[Feature 1]', '[Feature 2]', '[Feature 3]'],
+    featuresTitle: 'Features',
+    terms: 'Terms of Service',
+    privacy: 'Privacy Policy',
+  },
+};
+const lang = langFromPath(Astro.url.pathname);
+const c = copy[lang];
+---
+
+<BaseLayout title={c.title} description={c.description} wide>
+  <section class="py-8 text-center sm:py-16">
+    <h1 class="text-4xl font-bold sm:text-5xl">{c.name}</h1>
+    <p class="mt-4 text-xl text-slate-600">{c.tagline}</p>
+    <p class="mx-auto mt-6 max-w-xl">{c.lead}</p>
+  </section>
+  <section class="py-8">
+    <h2 class="text-2xl font-bold">{c.featuresTitle}</h2>
+    <ul class="mt-4 grid gap-4 sm:grid-cols-3">
+      {c.features.map((f) => <li class="rounded border border-slate-200 p-4">{f}</li>)}
+    </ul>
+  </section>
+  <p class="flex gap-6 py-8 text-sm">
+    <a href={localePath(lang, '/mochipo/terms/')} class="text-blue-700 underline">{c.terms}</a>
+    <a href={localePath(lang, '/mochipo/privacy/')} class="text-blue-700 underline">{c.privacy}</a>
+  </p>
+</BaseLayout>

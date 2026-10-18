@@ -1,11 +1,8 @@
 export const SITE_URL = 'https://toki-mochi.com';
-export const SITE_TITLE = 'mochipo';
-export const SITE_DESCRIPTION = 'mochipo のブログとお知らせ';
+export const OPERATOR = 'Toshimitsu Kugimoto';
 export const DEFAULT_OG_IMAGE = '/og-default.png';
+export const TOKIMOCHI_APP_STORE_URL = 'https://apps.apple.com/app/id6476399286';
 
-export const CATEGORIES = ['news', 'guide', 'column'] as const;
-export const CATEGORY_LABELS: Record<(typeof CATEGORIES)[number], string> = {
-  news: 'お知らせ',
-  guide: 'ガイド',
-  column: 'コラム',
-};
+// Which app (or the company itself) an article is about.
+export const APP_IDS = ['tokimochi', 'mochipo', 'company'] as const;
+export type AppId = (typeof APP_IDS)[number];

@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import { getArticles } from '../../../lib/content';
+import { langFromPath, langStaticPaths, t } from '../../../i18n/ui';
+
+export const getStaticPaths = langStaticPaths;
+
+const lang = langFromPath(Astro.url.pathname);
+const ui = t(lang).articles;
+const articles = await getArticles(lang);
+---
+
+<BaseLayout title={ui.title} description={ui.description}>
+  <h1 class="text-3xl font-bold">{ui.title}</h1>
+  <div class="mt-6 divide-y divide-slate-200">
+    {articles.length ? articles.map((a) => <ArticleCard article={a} />) : <p class="text-slate-500">{ui.none}</p>}
+  </div>
+</BaseLayout>

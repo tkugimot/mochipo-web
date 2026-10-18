@@ -1,7 +1,19 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { OPERATOR } from '../consts';
+import { langFromPath, localePath, t } from '../i18n/ui';
+
+const lang = langFromPath(Astro.url.pathname);
+const ui = t(lang);
+const links = [
+  { href: localePath(lang, '/articles/policy/'), label: ui.footer.policy },
+  { href: localePath(lang, '/mochipo/terms/'), label: ui.footer.terms },
+  { href: localePath(lang, '/mochipo/privacy/'), label: ui.footer.privacy },
+];
 ---
 
-<footer class="border-t border-slate-200 py-6 text-center text-sm text-slate-500">
-  &copy; {new Date().getFullYear()} {SITE_TITLE}
+<footer class="border-t border-slate-200 px-4 py-8 text-center text-sm text-slate-500">
+  <ul class="mb-3 flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-x-6">
+    {links.map((l) => <li><a href={l.href} class="hover:underline">{l.label}</a></li>)}
+  </ul>
+  &copy; {new Date().getFullYear()} {OPERATOR}
 </footer>

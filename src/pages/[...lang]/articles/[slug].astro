@@ -1,0 +1,40 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getArticles, hasArticle, slugOf } from '../../../lib/content';
+import { LANGS, formatDate, langFromPath, localePath, t } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of LANGS) {
+    for (const article of await getArticles(lang)) {
+      paths.push({
+        params: { lang: lang === 'ja' ? undefined : lang, slug: slugOf(article.id) },
+        props: { article },
+      });
+    }
+  }
+  return paths;
+}
+
+const { article } = Astro.props;
+const lang = langFromPath(Astro.url.pathname);
+const slug = slugOf(article.id);
+const otherLang = lang === 'ja' ? 'en' : 'ja';
+const noTranslation = !(await hasArticle(otherLang, slug));
+const { Content } = await render(article);
+const { title, description, pubDate, app, tags, ogImage } = article.data;
+---
+
+<BaseLayout title={title} description={description} image={ogImage} type="article" publishedTime={pubDate} noTranslation={noTranslation}>
+  <article>
+    <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+      <time datetime={pubDate.toISOString()}>{formatDate(pubDate, lang)}</time>
+      <span class="rounded bg-slate-100 px-2 py-0.5">{t(lang).apps[app]}</span>
+      {tags.map((tag) => <span>#{tag}</span>)}
+    </div>
+    <h1 class="mt-2 text-3xl font-bold">{title}</h1>
+    <div class="prose mt-6"><Content /></div>
+  </article>
+  <p class="mt-10"><a href={localePath(lang, '/articles/')} class="text-blue-700 underline">{t(lang).articles.back}</a></p>
+</BaseLayout>

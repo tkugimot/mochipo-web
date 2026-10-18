@@ -6,6 +6,24 @@ Astro 7 (静的サイト) + Cloudflare Workers。ブログ / カテゴリー / �
 - 問い合わせ API: `worker/index.ts`(`POST /api/contact`。Zod 検証 → Turnstile 検証 → Resend 送信)
 - 配信: `wrangler.jsonc`(`dist/` を静的アセットとして配信し、`/api/*` だけ Worker が先に処理)
 
+## URL 構成(既存の toki-mochi.com の URL は変えない)
+
+日本語はルート直下、英語は `/en/` 配下。ページは `src/pages/[...lang]/` に1つだけ置き、両言語分が生成される。
+
+| URL | 内容 |
+|---|---|
+| `/` | 時もち LP |
+| `/mochipo/` | mochipo(日本語名: もち歩)LP |
+| `/mochipo/terms/`, `/mochipo/privacy/` | もち歩(mochipo)の利用規約 / プライバシーポリシー |
+| `/articles/` , `/articles/<slug>/` | 記事(両アプリ共通。`app` で時もち / mochipo / 運営を区別) |
+| `/articles/policy/` | 時もちの利用規約・プライバシーポリシー(既存 URL) |
+| `/aboutus/`, `/contact/` | 運営者情報 / お問い合わせ(トピックでアプリを選択) |
+
+### コンテンツの差し替え方
+- 記事: `src/content/articles/<ja|en>/<slug>.md|mdx`(frontmatter は `src/content.config.ts`)。日英で同じ slug にすると言語切替・hreflang がつながる。
+- 規約: `src/content/legal/<ja|en>/*.md`。本文を貼り、`draft: true` を `false` にすると「準備中」表示と noindex が外れる。
+- LP・運営者情報の文言: 各 `.astro` ページ冒頭の `copy` オブジェクト。共通の文言は `src/i18n/ui.ts`。
+
 ## ローカル開発
 
 要件: Node 22 以上。
