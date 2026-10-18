@@ -11,7 +11,7 @@ const { title, effectiveDate, draft } = entry.data;
 
 <div class="card">
   <h1 class="text-3xl font-bold sm:text-4xl">{title}</h1>
-  {effectiveDate && <p class="mt-2 text-sm text-ink-soft"><time datetime={effectiveDate.toISOString()}>{formatDate(effectiveDate, lang)}</time></p>}
+  {effectiveDate && <p class="mt-2 text-sm text-ink-soft">{lang === 'en' && 'Effective '}<time datetime={effectiveDate.toISOString()}>{formatDate(effectiveDate, lang)}</time>{lang === 'ja' && ' 施行'}</p>}
   {draft && <p class="mt-5 rounded-2xl bg-amber-50 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-200">{t(lang).draft.notice}</p>}
   <div class="prose mt-8"><Content /></div>
 </div>
