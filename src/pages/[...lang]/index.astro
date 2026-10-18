@@ -2,32 +2,41 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AppHero from '../../components/AppHero.astro';
 import FeatureShowcase from '../../components/FeatureShowcase.astro';
+import Icon from '../../components/Icon.astro';
 import screenshotJa from '../../assets/screenshot_ja.png';
 import screenshotEn from '../../assets/screenshot_en.png';
 import timelimitJa from '../../assets/timelimit_ja.png';
 import timelimitEn from '../../assets/timelimit_en.png';
 import scheduleJa from '../../assets/schedule_ja.png';
 import scheduleEn from '../../assets/schedule_en.png';
+import unblockJa from '../../assets/unblock_ja.png';
+import unblockEn from '../../assets/unblock_en.png';
+import { Image } from 'astro:assets';
 import { TOKIMOCHI_APP_STORE_URL } from '../../consts';
 import { langFromPath, langStaticPaths, localePath } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 
-// Placeholder copy: replace with the real LP text.
 const copy = {
   ja: {
     name: '時もち',
     title: '時もち',
-    description: '時もちは、スマホとの付き合い方を見直すためのアプリです。',
+    description: '時もちは、スマホの利用を自主的に制限して、自分の時間を大切にするためのアプリです。',
     tagline: 'Be Time Rich',
-    lead: '【ここにアプリの説明文】',
+    lead: '時もちは、スマホの利用を自主的に制限して、自分の時間を大切にするためのアプリです。',
     cta: 'App Storeでダウンロード',
     more: '私たちが実現したいこと',
     shots: ['タイムリミット画面', 'クイックブロック画面', 'スケジュール画面'],
+    unblockAlt: 'ブロック解除の画面',
     problemEyebrow: 'Problem',
-    problemTitle: 'スマホに、時間を奪われていませんか?',
-    stat: '【00】%',
-    statLabel: '【ここに課題を表す数値の説明】',
+    problemTitle: '平均で1日4時間、若者の2割は7時間を費やしています。',
+    problemLead: '私たちは1日平均2600回スマホに触り、10分に1回手に取っています。',
+    stats: [
+      { value: '2,600回', label: '1日にスマホに触る回数(平均)' },
+      { value: '4時間', label: '1日の平均利用時間' },
+      { value: '7時間', label: '若者の2割が1日に費やす時間' },
+    ],
+    problemNote: 'スマホの過度な使用は睡眠障害やうつ、記憶力や集中力、学力の低下を引き起こすと言われています。',
     featuresEyebrow: 'Features',
     featuresTitle: '時もちができること',
     // Draft copy taken from the app UI. Replace with final wording.
@@ -36,20 +45,31 @@ const copy = {
       { icon: 'clock', title: 'タイムリミット', body: '1日の利用時間に上限を設定。終了の15分前にプッシュ通知でお知らせします。' },
       { icon: 'calendar', title: 'スケジュール', body: '毎日や曜日ごとに、ブロックする時間帯を決められます。' },
     ],
+    unblockEyebrow: 'Unblock',
+    unblockTitle: 'ブロック解除には、反省文が必要です',
+    unblockBody: 'ブロックを解除するためには面倒な反省文を書く必要があります。',
+    closingTitle: 'ユーザー登録不要！',
+    closingBody: 'アプリをダウンロードしたらすぐにご利用いただけます。',
   },
   en: {
     name: 'Time Rich',
     title: 'Time Rich',
-    description: 'Time Rich helps you rethink your relationship with your smartphone.',
+    description: 'Time Rich is an app that helps you voluntarily limit your smartphone use so you can value your own time.',
     tagline: 'Be Time Rich',
-    lead: '[App description goes here]',
+    lead: 'Time Rich is an app that helps you voluntarily limit your smartphone use so you can value your own time.',
     cta: 'Download on the App Store',
     more: 'What we want to achieve',
     shots: ['Time Limit screen', 'Quick Block screen', 'Schedule screen'],
+    unblockAlt: 'Unblock screen',
     problemEyebrow: 'Problem',
-    problemTitle: 'Is your phone taking your time?',
-    stat: '[00]%',
-    statLabel: '[A statistic describing the problem goes here]',
+    problemTitle: 'On average we spend 4 hours a day on our phones, and 1 in 5 young people spend 7.',
+    problemLead: 'We touch our smartphones 2,600 times a day on average, and pick them up once every 10 minutes.',
+    stats: [
+      { value: '2,600', label: 'times a day we touch our phones (average)' },
+      { value: '4 hrs', label: 'average daily use' },
+      { value: '7 hrs', label: 'daily use for 1 in 5 young people' },
+    ],
+    problemNote: 'Excessive smartphone use is said to cause sleep disorders, depression, and declines in memory, concentration, and academic performance.',
     featuresEyebrow: 'Features',
     featuresTitle: 'What Time Rich does',
     // Draft copy taken from the app UI. Replace with final wording.
@@ -58,11 +78,17 @@ const copy = {
       { icon: 'clock', title: 'Time Limit', body: 'Set a daily limit. You get a push notification 15 minutes before it ends.' },
       { icon: 'calendar', title: 'Schedule', body: 'Choose the hours to block, every day or on specific weekdays.' },
     ],
+    unblockEyebrow: 'Unblock',
+    unblockTitle: 'To unblock, you write a letter of reflection',
+    unblockBody: 'To lift a block, you have to write a tedious letter of reflection.',
+    closingTitle: 'No sign-up required!',
+    closingBody: 'Just download the app and start using it right away.',
   },
 } as const;
 const lang = langFromPath(Astro.url.pathname);
 const c = copy[lang];
 const images = lang === 'ja' ? [timelimitJa, screenshotJa, scheduleJa] : [timelimitEn, screenshotEn, scheduleEn];
+const unblockImage = lang === 'ja' ? unblockJa : unblockEn;
 const screenshots = images.map((src, i) => ({ src, alt: c.shots[i] }));
 // Feature order is Quick, Time Limit, Schedule; the hero fan is [Time Limit, Quick, Schedule].
 const featureImages = [images[1], images[0], images[2]];
@@ -81,10 +107,47 @@ const features = c.features.map((f, i) => ({ ...f, image: featureImages[i], alt:
 
   <section class="my-10 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#1a1fd6] via-[#4a2bb8] to-[#7b2fb0] px-6 py-14 text-center text-white sm:px-12">
     <p class="eyebrow !text-[#8ff0e0]">{c.problemEyebrow}</p>
-    <h2 class="mx-auto mt-3 max-w-2xl text-2xl font-bold sm:text-4xl">{c.problemTitle}</h2>
-    <p class="mt-8 font-display text-7xl font-bold text-[#8ff0e0] sm:text-8xl">{c.stat}</p>
-    <p class="mx-auto mt-3 max-w-md text-white/80">{c.statLabel}</p>
+    <h2 class="mx-auto mt-3 max-w-3xl text-2xl leading-snug font-bold sm:text-4xl">{c.problemTitle}</h2>
+    <p class="mx-auto mt-4 max-w-2xl text-white/80">{c.problemLead}</p>
+    <dl class="mt-10 grid gap-8 sm:grid-cols-3">
+      {c.stats.map((stat) => (
+        <div>
+          <dd class="font-display text-5xl font-bold text-[#8ff0e0] sm:text-6xl">{stat.value}</dd>
+          <dt class="mx-auto mt-2 max-w-[14rem] text-sm text-white/80">{stat.label}</dt>
+        </div>
+      ))}
+    </dl>
+    <p class="mx-auto mt-10 max-w-2xl border-t border-white/20 pt-8 leading-8 text-white/90">{c.problemNote}</p>
   </section>
 
   <FeatureShowcase eyebrow={c.featuresEyebrow} title={c.featuresTitle} items={features} />
+
+  <section class="my-6 grid items-center gap-10 overflow-hidden rounded-[2.5rem] bg-(--accent-soft) px-6 py-12 sm:px-12 md:grid-cols-[1.1fr_0.9fr]">
+    <div class="text-center md:text-left">
+      <span class="inline-flex size-14 items-center justify-center rounded-2xl bg-white text-(--accent-strong) shadow-soft">
+        <Icon name="pen" class="size-7" />
+      </span>
+      <p class="eyebrow mt-5">{c.unblockEyebrow}</p>
+      <h2 class="mt-1 text-2xl leading-snug font-bold sm:text-3xl">{c.unblockTitle}</h2>
+      <p class="mx-auto mt-3 max-w-md leading-8 text-ink-soft md:mx-0">{c.unblockBody}</p>
+    </div>
+    <div class="relative mx-auto w-52 sm:w-60">
+      {/* Same width as the other phone images, so the file is cached once. */}
+      <Image
+        src={unblockImage}
+        alt={c.unblockAlt}
+        width={480}
+        densities={[1, 2]}
+        loading="lazy"
+        decoding="async"
+        class="h-auto w-full -rotate-2 [filter:drop-shadow(0_24px_28px_rgb(40_20_60/0.28))]"
+      />
+    </div>
+  </section>
+
+  <section class="card my-16 text-center">
+    <h2 class="text-3xl font-bold sm:text-4xl">{c.closingTitle}</h2>
+    <p class="mx-auto mt-3 max-w-md leading-8 text-ink-soft">{c.closingBody}</p>
+    <a href={TOKIMOCHI_APP_STORE_URL} class="btn-primary mt-8">{c.cta}</a>
+  </section>
 </BaseLayout>
