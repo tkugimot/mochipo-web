@@ -7,3 +7,5 @@ tags: [others]
 ---
 
 [Paste the existing article body here]
+
+![A warehouse district in Tochigi](../../../assets/tochigi.jpg)

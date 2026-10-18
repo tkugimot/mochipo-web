@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets';
+import profile from '../assets/profile.jpg';
+import { OPERATOR } from '../consts';
+import { langFromPath, t } from '../i18n/ui';
+
+const lang = langFromPath(Astro.url.pathname);
+---
+
+<div class="flex items-center gap-4 rounded-3xl bg-(--accent-soft) p-5">
+  <span class="size-20 shrink-0 overflow-hidden rounded-full ring-4 ring-white">
+    <!-- The photo is a wide portrait; zoom in on the face for the round crop. -->
+    <Image src={profile} alt={OPERATOR} width={240} height={320} densities={[1, 2]} class="size-full origin-[68%_42%] scale-[2.6] object-cover" />
+  </span>
+  <div>
+    <p class="font-display text-lg font-bold">{OPERATOR}</p>
+    <p class="text-sm text-ink-soft">{t(lang).author.role}</p>
+  </div>
+</div>

@@ -1,14 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { OPERATOR } from '../../consts';
+import AuthorCard from '../../components/AuthorCard.astro';
 import { langFromPath, langStaticPaths } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 
 // Placeholder copy: replace with the real "about us" text.
 const copy = {
-  ja: { title: '運営者情報', description: '時もち・もち歩の運営者についてご紹介します。', operator: '運営者', body: '【ここに運営者の紹介文】' },
-  en: { title: 'About us', description: 'About the developer of Time Rich and mochipo.', operator: 'Operator', body: '[About text goes here]' },
+  ja: { title: '運営者情報', description: '時もち・もち歩の運営者についてご紹介します。', body: '【ここに運営者の紹介文】' },
+  en: { title: 'About us', description: 'About the developer of Time Rich and mochipo.', body: '[About text goes here]' },
 };
 const c = copy[langFromPath(Astro.url.pathname)];
 ---
@@ -17,10 +17,7 @@ const c = copy[langFromPath(Astro.url.pathname)];
   <div class="card">
     <p class="eyebrow">About</p>
     <h1 class="mt-2 text-3xl font-bold sm:text-4xl">{c.title}</h1>
-    <dl class="mt-8 rounded-2xl bg-(--accent-soft) px-5 py-4">
-      <dt class="text-sm text-ink-soft">{c.operator}</dt>
-      <dd class="mt-1 font-display text-lg font-bold">{OPERATOR}</dd>
-    </dl>
+    <div class="mt-8"><AuthorCard /></div>
     <p class="mt-6 leading-8">{c.body}</p>
   </div>
 </BaseLayout>

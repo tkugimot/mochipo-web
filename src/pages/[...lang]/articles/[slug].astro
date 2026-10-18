@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AuthorCard from '../../../components/AuthorCard.astro';
 import { getArticles, hasArticle, slugOf } from '../../../lib/content';
 import { LANGS, formatDate, langFromPath, localePath, t } from '../../../i18n/ui';
 
@@ -38,5 +39,6 @@ const { title, description, pubDate, app, tags, ogImage } = article.data;
     </header>
     <div class="prose mt-10 px-1"><Content /></div>
   </article>
-  <p class="mt-12"><a href={localePath(lang, '/articles/')} class="btn-ghost">&larr; {t(lang).articles.back}</a></p>
+  <div class="mt-12"><AuthorCard /></div>
+  <p class="mt-8"><a href={localePath(lang, '/articles/')} class="btn-ghost">&larr; {t(lang).articles.back}</a></p>
 </BaseLayout>

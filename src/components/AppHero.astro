@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   name: string;
   tagline: string;
@@ -6,8 +8,12 @@ interface Props {
   primary?: { href: string; label: string };
   secondary?: { href: string; label: string };
   screenshotLabel?: string;
+  /** Real screenshots: [left, center, right] fan, or a single image. Omit for the placeholder frame. */
+  screenshots?: { src: ImageMetadata; alt: string }[];
 }
-const { name, tagline, lead, primary, secondary, screenshotLabel = 'App screenshot' } = Astro.props;
+const { name, tagline, lead, primary, secondary, screenshotLabel = 'App screenshot', screenshots } = Astro.props;
+const fan = screenshots?.length === 3;
+const phone = 'h-auto w-full [filter:drop-shadow(0_24px_28px_rgb(40_20_60/0.28))]';
 ---
 
 <section class="grid items-center gap-12 py-6 md:grid-cols-[1.1fr_0.9fr] md:py-14">
@@ -23,14 +29,35 @@ const { name, tagline, lead, primary, secondary, screenshotLabel = 'App screensh
     </div>
   </div>
 
-  <!-- Phone frame: swap the inner block for a real screenshot later. -->
-  <div class="relative mx-auto w-64 sm:w-72 motion-safe:animate-rise [animation-delay:120ms]">
-    <div aria-hidden="true" class="absolute -inset-6 -z-10 rounded-full bg-(--accent-soft) blur-2xl"></div>
-    <div class="rotate-3 rounded-[2.75rem] border-[10px] border-ink bg-white p-2 shadow-lift">
-      <div class="flex aspect-[9/19] flex-col items-center justify-center gap-3 rounded-[2rem] bg-gradient-to-br from-(--accent-soft) via-white to-(--accent-soft) text-center text-sm text-ink-soft">
-        <span class="size-14 rounded-full bg-(--accent) opacity-70"></span>
-        {screenshotLabel}
+  {/* Without real screenshots, a placeholder phone frame is shown. */}
+  {screenshots && screenshots.length > 0 ? (
+    <div class:list={['relative mx-auto w-full motion-safe:animate-rise [animation-delay:120ms]', fan ? 'max-w-md' : 'max-w-[18rem]']}>
+      <div aria-hidden="true" class="absolute inset-8 -z-10 rounded-full bg-(--accent-soft) blur-3xl"></div>
+      {fan ? (
+        <>
+          <div class="absolute top-[8%] left-0 w-[52%] -rotate-6 opacity-95">
+            <Image src={screenshots[0].src} alt={screenshots[0].alt} width={420} densities={[1, 2]} class={phone} />
+          </div>
+          <div class="absolute top-[8%] right-0 w-[52%] rotate-6 opacity-95">
+            <Image src={screenshots[2].src} alt={screenshots[2].alt} width={420} densities={[1, 2]} class={phone} />
+          </div>
+          <div class="relative z-10 mx-auto w-[62%]">
+            <Image src={screenshots[1].src} alt={screenshots[1].alt} width={480} densities={[1, 2]} loading="eager" class={phone} />
+          </div>
+        </>
+      ) : (
+        <Image src={screenshots[0].src} alt={screenshots[0].alt} width={480} densities={[1, 2]} loading="eager" class={phone} />
+      )}
+    </div>
+  ) : (
+    <div class="relative mx-auto w-64 sm:w-72 motion-safe:animate-rise [animation-delay:120ms]">
+      <div aria-hidden="true" class="absolute -inset-6 -z-10 rounded-full bg-(--accent-soft) blur-2xl"></div>
+      <div class="rotate-3 rounded-[2.75rem] border-[10px] border-ink bg-white p-2 shadow-lift">
+        <div class="flex aspect-[9/19] flex-col items-center justify-center gap-3 rounded-[2rem] bg-gradient-to-br from-(--accent-soft) via-white to-(--accent-soft) text-center text-sm text-ink-soft">
+          <span class="size-14 rounded-full bg-(--accent) opacity-70"></span>
+          {screenshotLabel}
+        </div>
       </div>
     </div>
-  </div>
+  )}
 </section>
