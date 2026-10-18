@@ -1,6 +1,5 @@
 ---
 import { langFromPath, localePath, stripLang, t } from '../i18n/ui';
-import MochiMark from './MochiMark.astro';
 
 interface Props { noTranslation?: boolean }
 const { noTranslation = false } = Astro.props;
@@ -20,10 +19,10 @@ const contact = { href: localePath(lang, '/contact/'), label: ui.nav.contact };
 const linkClass = 'rounded-full px-4 py-2 text-sm font-medium transition hover:bg-black/5';
 ---
 
-<header class="sticky top-0 z-40 border-b border-black/5 bg-cream/80 backdrop-blur-md">
+<header class="sticky top-0 z-40 border-b border-black/5 bg-[color-mix(in_srgb,var(--page-bg)_80%,transparent)] backdrop-blur-md">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
     <a href={localePath(lang, '/')} class="flex items-center gap-2 font-display text-xl font-bold">
-      <MochiMark class="size-9 text-ink" />
+      <img src="/icon.png" alt="" width="36" height="36" class="size-9 rounded-xl shadow-soft" />
       {ui.siteTitle}
     </a>
 
@@ -38,8 +37,8 @@ const linkClass = 'rounded-full px-4 py-2 text-sm font-medium transition hover:b
         <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </summary>
       <nav aria-label="Main (mobile)" class="absolute right-0 mt-3 flex w-64 flex-col gap-1 rounded-3xl border border-black/5 bg-white p-3 shadow-lift">
-        {[...links, contact].map((l) => <a href={l.href} class="rounded-2xl px-4 py-3 font-medium hover:bg-cream">{l.label}</a>)}
-        <a href={switchHref} hreflang={other} lang={other} class="rounded-2xl px-4 py-3 text-ink-soft hover:bg-cream">{ui.nav.language}</a>
+        {[...links, contact].map((l) => <a href={l.href} class="rounded-2xl px-4 py-3 font-medium hover:bg-(--accent-soft)">{l.label}</a>)}
+        <a href={switchHref} hreflang={other} lang={other} class="rounded-2xl px-4 py-3 text-ink-soft hover:bg-(--accent-soft)">{ui.nav.language}</a>
       </nav>
     </details>
   </div>

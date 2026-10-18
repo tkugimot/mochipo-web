@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+
+interface Item { icon: Parameters<typeof Icon>[0]['name']; title: string; body: string; image: ImageMetadata; alt: string }
+interface Props { title: string; eyebrow?: string; items: Item[] }
+const { title, eyebrow, items } = Astro.props;
+---
+
+<section class="py-14">
+  {eyebrow && <p class="eyebrow text-center">{eyebrow}</p>}
+  <h2 class="mt-2 text-center text-3xl font-bold sm:text-4xl">{title}</h2>
+  <div class="mt-14 space-y-20 sm:space-y-28">
+    {items.map((item, i) => (
+      <div class="grid items-center gap-8 md:grid-cols-2 md:gap-16">
+        <div class:list={['text-center md:text-left', i % 2 === 0 ? 'md:order-1' : 'md:order-2']}>
+          <span class="inline-flex size-12 items-center justify-center rounded-2xl bg-(--accent-soft) text-(--accent-strong)">
+            <Icon name={item.icon} class="size-6" />
+          </span>
+          <p class="mt-4 font-display text-sm font-bold tracking-widest text-(--accent-strong)">{String(i + 1).padStart(2, '0')}</p>
+          <h3 class="mt-1 text-2xl font-bold sm:text-3xl">{item.title}</h3>
+          <p class="mx-auto mt-3 max-w-md leading-8 text-ink-soft md:mx-0">{item.body}</p>
+        </div>
+        <div class:list={['relative mx-auto w-52 sm:w-60', i % 2 === 0 ? 'md:order-2' : 'md:order-1']}>
+          <div aria-hidden="true" class="absolute -inset-8 -z-10 rounded-full bg-(--accent-soft) blur-3xl"></div>
+          {/* Same width as the hero image, so the browser reuses one cached file. */}
+          <Image
+            src={item.image}
+            alt={item.alt}
+            width={480}
+            densities={[1, 2]}
+            loading="lazy"
+            decoding="async"
+            class:list={['h-auto w-full [filter:drop-shadow(0_24px_28px_rgb(40_20_60/0.28))]', i % 2 === 0 ? 'rotate-2' : '-rotate-2']}
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

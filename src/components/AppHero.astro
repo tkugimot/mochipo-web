@@ -36,17 +36,17 @@ const phone = 'h-auto w-full [filter:drop-shadow(0_24px_28px_rgb(40_20_60/0.28))
       {fan ? (
         <>
           <div class="absolute top-[8%] left-0 w-[52%] -rotate-6 opacity-95">
-            <Image src={screenshots[0].src} alt={screenshots[0].alt} width={420} densities={[1, 2]} class={phone} />
+            <Image src={screenshots[0].src} alt={screenshots[0].alt} width={480} densities={[1, 2]} class={phone} />
           </div>
           <div class="absolute top-[8%] right-0 w-[52%] rotate-6 opacity-95">
-            <Image src={screenshots[2].src} alt={screenshots[2].alt} width={420} densities={[1, 2]} class={phone} />
+            <Image src={screenshots[2].src} alt={screenshots[2].alt} width={480} densities={[1, 2]} class={phone} />
           </div>
           <div class="relative z-10 mx-auto w-[62%]">
             <Image src={screenshots[1].src} alt={screenshots[1].alt} width={480} densities={[1, 2]} loading="eager" class={phone} />
           </div>
         </>
       ) : (
-        <Image src={screenshots[0].src} alt={screenshots[0].alt} width={480} densities={[1, 2]} loading="eager" class={phone} />
+        <Image src={screenshots[0].src} alt={screenshots[0].alt} width={480} densities={[1, 2]} loading="eager" class:list={[phone, 'rotate-2']} />
       )}
     </div>
   ) : (

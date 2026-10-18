@@ -8,8 +8,8 @@ const { article } = Astro.props;
 const lang = langFromPath(Astro.url.pathname);
 const { title, description, pubDate, app } = article.data;
 const badge = {
-  tokimochi: 'bg-peach-soft text-peach-strong',
-  mochipo: 'bg-mint-soft text-mint-strong',
+  tokimochi: 'bg-blue-soft text-blue-strong',
+  mochipo: 'bg-orange-soft text-orange-strong',
   company: 'bg-black/5 text-ink-soft',
 }[app];
 ---

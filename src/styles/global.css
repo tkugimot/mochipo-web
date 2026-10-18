@@ -4,16 +4,15 @@
   --font-sans: "Noto Sans JP", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Zen Maru Gothic", "Noto Sans JP", ui-sans-serif, system-ui, sans-serif;
 
-  --color-cream: #fffaf2;
   --color-ink: #2a2430;
   --color-ink-soft: #6a6272;
 
-  --color-peach: #ff9a7a;
-  --color-peach-soft: #ffe7de;
-  --color-peach-strong: #b8421f;
-  --color-mint: #43c9a5;
-  --color-mint-soft: #dcf7ee;
-  --color-mint-strong: #0b7a5c;
+  --color-blue: #5a6bff;
+  --color-blue-soft: #e5e9ff;
+  --color-blue-strong: #2431c4;
+  --color-orange: #ff9a52;
+  --color-orange-soft: #ffe9d6;
+  --color-orange-strong: #b4500b;
 
   --shadow-soft: 0 12px 32px -14px rgb(70 40 30 / 0.22);
   --shadow-lift: 0 22px 44px -16px rgb(70 40 30 / 0.3);
@@ -32,19 +31,21 @@
 
 /* Per-app accent. Pages pick one with <BaseLayout theme="mochipo">. */
 .theme-tokimochi {
-  --accent: var(--color-peach);
-  --accent-soft: var(--color-peach-soft);
-  --accent-strong: var(--color-peach-strong);
+  --accent: var(--color-blue);
+  --accent-soft: var(--color-blue-soft);
+  --accent-strong: var(--color-blue-strong);
+  --page-bg: #f6f7ff;
 }
 .theme-mochipo {
-  --accent: var(--color-mint);
-  --accent-soft: var(--color-mint-soft);
-  --accent-strong: var(--color-mint-strong);
+  --accent: var(--color-orange);
+  --accent-soft: var(--color-orange-soft);
+  --accent-strong: var(--color-orange-strong);
+  --page-bg: #fff8f0;
 }
 
 @layer base {
   html { scroll-behavior: smooth; }
-  body { @apply bg-cream font-sans text-ink antialiased; }
+  body { @apply font-sans text-ink antialiased; background-color: var(--page-bg); }
   h1, h2, h3 { @apply font-display; font-feature-settings: "palt"; letter-spacing: -0.04em; }
   ::selection { background: var(--accent-soft); }
   :focus-visible { outline: 3px solid var(--accent-strong); outline-offset: 3px; border-radius: 0.5rem; }
