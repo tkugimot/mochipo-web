@@ -1,6 +1,6 @@
 ---
-title: mochipo Terms of Service
-description: Terms of Service for mochipo.
+title: Mochipo Terms of Service
+description: Terms of Service for Mochipo.
 draft: true
 ---
 

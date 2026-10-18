@@ -17,9 +17,9 @@ const copy = {
   },
   en: {
     title: 'About us',
-    description: 'About the developer of Time Rich and mochipo.',
+    description: 'About the developer of Time Rich and Mochipo.',
     paragraphs: [
-      'Master of Engineering (Information Science), Chiba University. Spent one year in Finland as an exchange student during graduate school.',
+      'Master of Engineering, Chiba University. Spent one year in Finland as an exchange student during graduate school.',
       'Joined Yahoo Japan Corporation as a new graduate, then worked at PayPay and LY Corporation (formerly LINE Yahoo), developing services for payments and finance as well as disaster and public information delivery. Later changed jobs, and now serves as the tech lead of an international team at a global company.',
       'Through a wide range of experiences at work and in private life, I came to realize how important mental health is. I am currently developing apps, including this one, that improve mental health and help in everyday life. Father of three.',
     ],
@@ -32,7 +32,7 @@ const c = copy[langFromPath(Astro.url.pathname)];
   <div class="card">
     <p class="eyebrow">About</p>
     <h1 class="mt-2 text-3xl font-bold sm:text-4xl">{c.title}</h1>
-    <div class="mt-8"><AuthorCard /></div>
+    <div class="mt-8"><AuthorCard link={false} /></div>
     <div class="mt-6 space-y-4 leading-8">
       {c.paragraphs.map((text) => <p>{text}</p>)}
     </div>

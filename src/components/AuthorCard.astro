@@ -2,18 +2,29 @@
 import { Image } from 'astro:assets';
 import profile from '../assets/profile.jpg';
 import { OPERATOR } from '../consts';
-import { langFromPath, t } from '../i18n/ui';
+import { langFromPath, localePath, t } from '../i18n/ui';
 
+interface Props {
+  /** Link the card to the About page. Turn off on the About page itself. */
+  link?: boolean;
+}
+const { link = true } = Astro.props;
 const lang = langFromPath(Astro.url.pathname);
+const ui = t(lang);
+const Tag = link ? 'a' : 'div';
 ---
 
-<div class="flex items-center gap-4 rounded-3xl bg-(--accent-soft) p-5">
+<Tag
+  href={link ? localePath(lang, '/aboutus/') : undefined}
+  class:list={['flex items-center gap-4 rounded-3xl bg-(--accent-soft) p-5', link && 'group transition duration-200 hover:shadow-soft motion-safe:hover:-translate-y-0.5']}
+>
   <span class="size-20 shrink-0 overflow-hidden rounded-full ring-4 ring-white">
     <!-- The photo is a wide portrait; zoom in on the face for the round crop. -->
     <Image src={profile} alt={OPERATOR} width={240} height={320} densities={[1, 2]} class="size-full origin-[68%_42%] scale-[2.6] object-cover" />
   </span>
   <div>
     <p class="font-display text-lg font-bold">{OPERATOR}</p>
-    <p class="text-sm text-ink-soft">{t(lang).author.role}</p>
+    <p class="text-sm text-ink-soft">{ui.author.role}</p>
   </div>
-</div>
+  {link && <span class="ml-auto text-sm font-bold text-(--accent-strong)">{ui.nav.about} <span aria-hidden="true" class="inline-block transition group-hover:translate-x-1">&rarr;</span></span>}
+</Tag>

@@ -1,6 +1,6 @@
 ---
-title: mochipo Privacy Policy
-description: Privacy Policy for mochipo.
+title: Mochipo Privacy Policy
+description: Privacy Policy for Mochipo.
 draft: true
 ---
 
