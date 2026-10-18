@@ -41,7 +41,7 @@ const dict = {
     footer: { policy: '時もち 利用規約・プライバシーポリシー', terms: 'もち歩 利用規約', privacy: 'もち歩 プライバシーポリシー' },
     articles: { title: '記事', description: '時もち・もち歩に関する記事の一覧です。', none: '記事はまだありません。', back: '記事一覧へ' },
     draft: { notice: 'このページは準備中です。内容は確定していません。' },
-    author: { role: 'ソフトウェアエンジニア' },
+    author: { role: 'ソフトウェアエンジニア（テックリード）' },
     contact: {
       title: 'お問い合わせ',
       description: 'お問い合わせはこちらのフォームからどうぞ。',
@@ -72,7 +72,7 @@ const dict = {
     footer: { policy: 'Time Rich Terms & Privacy Policy', terms: 'mochipo Terms of Service', privacy: 'mochipo Privacy Policy' },
     articles: { title: 'Articles', description: 'Articles about Time Rich and mochipo.', none: 'No articles yet.', back: 'All articles' },
     draft: { notice: 'This page is a work in progress. Its content is not final.' },
-    author: { role: 'Software Engineer' },
+    author: { role: 'Software Engineer (Tech Lead)' },
     contact: {
       title: 'Contact',
       description: 'Send us a message using the form below.',

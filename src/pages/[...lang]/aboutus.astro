@@ -5,10 +5,25 @@ import { langFromPath, langStaticPaths } from '../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 
-// Placeholder copy: replace with the real "about us" text.
 const copy = {
-  ja: { title: '運営者情報', description: '時もち・もち歩の運営者についてご紹介します。', body: '【ここに運営者の紹介文】' },
-  en: { title: 'About us', description: 'About the developer of Time Rich and mochipo.', body: '[About text goes here]' },
+  ja: {
+    title: '運営者情報',
+    description: '時もち・もち歩の運営者についてご紹介します。',
+    paragraphs: [
+      '千葉大学・工学修士（情報系）。大学院時代に1年間フィンランドへ交換留学。',
+      '新卒でヤフー株式会社に入社し、その後、PayPay、LINEヤフーにて、決済・金融や災害・公共情報配信に関わるサービス開発に携わってきました。その後転職し、現在はグローバル企業で国際的なチームのテックリードを担当しています。',
+      '仕事やプライベートでの様々な経験からメンタルヘルスの重要性を痛感し、本アプリを含めメンタルヘルス改善やその他実生活に役立つアプリを開発中です。三児の父。',
+    ],
+  },
+  en: {
+    title: 'About us',
+    description: 'About the developer of Time Rich and mochipo.',
+    paragraphs: [
+      'Master of Engineering (Information Science), Chiba University. Spent one year in Finland as an exchange student during graduate school.',
+      'Joined Yahoo Japan Corporation as a new graduate, then worked at PayPay and LY Corporation (formerly LINE Yahoo), developing services for payments and finance as well as disaster and public information delivery. Later changed jobs, and now serves as the tech lead of an international team at a global company.',
+      'Through a wide range of experiences at work and in private life, I came to realize how important mental health is. I am currently developing apps, including this one, that improve mental health and help in everyday life. Father of three.',
+    ],
+  },
 };
 const c = copy[langFromPath(Astro.url.pathname)];
 ---
@@ -18,6 +33,8 @@ const c = copy[langFromPath(Astro.url.pathname)];
     <p class="eyebrow">About</p>
     <h1 class="mt-2 text-3xl font-bold sm:text-4xl">{c.title}</h1>
     <div class="mt-8"><AuthorCard /></div>
-    <p class="mt-6 leading-8">{c.body}</p>
+    <div class="mt-6 space-y-4 leading-8">
+      {c.paragraphs.map((text) => <p>{text}</p>)}
+    </div>
   </div>
 </BaseLayout>
