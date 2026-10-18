@@ -26,15 +26,17 @@ const { Content } = await render(article);
 const { title, description, pubDate, app, tags, ogImage } = article.data;
 ---
 
-<BaseLayout title={title} description={description} image={ogImage} type="article" publishedTime={pubDate} noTranslation={noTranslation}>
+<BaseLayout title={title} description={description} image={ogImage} type="article" publishedTime={pubDate} noTranslation={noTranslation} theme={app === 'mochipo' ? 'mochipo' : 'tokimochi'}>
   <article>
-    <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500">
-      <time datetime={pubDate.toISOString()}>{formatDate(pubDate, lang)}</time>
-      <span class="rounded bg-slate-100 px-2 py-0.5">{t(lang).apps[app]}</span>
-      {tags.map((tag) => <span>#{tag}</span>)}
-    </div>
-    <h1 class="mt-2 text-3xl font-bold">{title}</h1>
-    <div class="prose mt-6"><Content /></div>
+    <header class="rounded-[2rem] bg-(--accent-soft) px-6 py-10 sm:px-10">
+      <div class="flex flex-wrap items-center gap-3 text-sm">
+        <span class="rounded-full bg-white/80 px-3 py-1 font-bold text-(--accent-strong)">{t(lang).apps[app]}</span>
+        <time datetime={pubDate.toISOString()} class="text-ink-soft">{formatDate(pubDate, lang)}</time>
+        {tags.map((tag) => <span class="text-ink-soft">#{tag}</span>)}
+      </div>
+      <h1 class="mt-4 text-3xl leading-snug font-bold sm:text-4xl">{title}</h1>
+    </header>
+    <div class="prose mt-10 px-1"><Content /></div>
   </article>
-  <p class="mt-10"><a href={localePath(lang, '/articles/')} class="text-blue-700 underline">{t(lang).articles.back}</a></p>
+  <p class="mt-12"><a href={localePath(lang, '/articles/')} class="btn-ghost">&larr; {t(lang).articles.back}</a></p>
 </BaseLayout>

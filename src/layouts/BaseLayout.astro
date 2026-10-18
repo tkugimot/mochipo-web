@@ -15,8 +15,10 @@ interface Props {
   noTranslation?: boolean;
   /** Full-width content (landing pages). Default is a readable column. */
   wide?: boolean;
+  /** Accent colour set. */
+  theme?: 'tokimochi' | 'mochipo';
 }
-const { wide = false, ...seo } = Astro.props;
+const { wide = false, theme = 'tokimochi', ...seo } = Astro.props;
 const lang = langFromPath(Astro.url.pathname);
 ---
 
@@ -28,12 +30,23 @@ const lang = langFromPath(Astro.url.pathname);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap"
+    />
     <meta name="generator" content={Astro.generator} />
     <SEO {...seo} />
   </head>
-  <body class="flex min-h-screen flex-col bg-white text-slate-800">
+  <body class={`theme-${theme} relative flex min-h-screen flex-col overflow-x-clip`}>
+    <!-- Soft background blobs -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] overflow-hidden">
+      <div class="absolute -top-24 -left-24 size-[28rem] rounded-full bg-(--accent-soft) opacity-80 blur-3xl motion-safe:animate-float"></div>
+      <div class="absolute top-10 -right-32 size-[26rem] rounded-full bg-(--accent) opacity-20 blur-3xl motion-safe:animate-float [animation-delay:-4s]"></div>
+    </div>
     <Header noTranslation={seo.noTranslation} />
-    <main class:list={['mx-auto w-full flex-1 px-4 py-8 sm:py-12', wide ? 'max-w-5xl' : 'max-w-3xl']}>
+    <main class:list={['mx-auto w-full flex-1 px-4 py-10 sm:px-6 sm:py-14', wide ? 'max-w-6xl' : 'max-w-3xl']}>
       <slot />
     </main>
     <Footer />

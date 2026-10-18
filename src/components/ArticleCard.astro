@@ -7,13 +7,20 @@ interface Props { article: CollectionEntry<'articles'> }
 const { article } = Astro.props;
 const lang = langFromPath(Astro.url.pathname);
 const { title, description, pubDate, app } = article.data;
+const badge = {
+  tokimochi: 'bg-peach-soft text-peach-strong',
+  mochipo: 'bg-mint-soft text-mint-strong',
+  company: 'bg-black/5 text-ink-soft',
+}[app];
 ---
 
-<article class="py-5">
-  <div class="flex items-center gap-3 text-sm text-slate-500">
-    <time datetime={pubDate.toISOString()}>{formatDate(pubDate, lang)}</time>
-    <span class="rounded bg-slate-100 px-2 py-0.5">{t(lang).apps[app]}</span>
+<article class="card group relative transition duration-200 motion-safe:hover:-translate-y-1 hover:shadow-lift">
+  <div class="flex items-center gap-3 text-sm">
+    <span class={`rounded-full px-3 py-1 font-bold ${badge}`}>{t(lang).apps[app]}</span>
+    <time datetime={pubDate.toISOString()} class="text-ink-soft">{formatDate(pubDate, lang)}</time>
   </div>
-  <h2 class="mt-1 text-xl font-bold"><a href={localePath(lang, `/articles/${slugOf(article.id)}/`)} class="hover:underline">{title}</a></h2>
-  <p class="mt-1 text-slate-600">{description}</p>
+  <h2 class="mt-4 text-xl leading-snug font-bold">
+    <a href={localePath(lang, `/articles/${slugOf(article.id)}/`)} class="after:absolute after:inset-0 after:content-['']">{title}</a>
+  </h2>
+  <p class="mt-2 line-clamp-3 leading-7 text-ink-soft">{description}</p>
 </article>

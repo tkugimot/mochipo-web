@@ -14,10 +14,13 @@ const c = copy[langFromPath(Astro.url.pathname)];
 ---
 
 <BaseLayout title={c.title} description={c.description}>
-  <h1 class="text-3xl font-bold">{c.title}</h1>
-  <dl class="mt-6">
-    <dt class="text-sm text-slate-500">{c.operator}</dt>
-    <dd class="mt-1">{OPERATOR}</dd>
-  </dl>
-  <p class="mt-6 leading-8">{c.body}</p>
+  <div class="card">
+    <p class="eyebrow">About</p>
+    <h1 class="mt-2 text-3xl font-bold sm:text-4xl">{c.title}</h1>
+    <dl class="mt-8 rounded-2xl bg-(--accent-soft) px-5 py-4">
+      <dt class="text-sm text-ink-soft">{c.operator}</dt>
+      <dd class="mt-1 font-display text-lg font-bold">{OPERATOR}</dd>
+    </dl>
+    <p class="mt-6 leading-8">{c.body}</p>
+  </div>
 </BaseLayout>

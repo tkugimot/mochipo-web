@@ -6,26 +6,26 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 const lang = langFromPath(Astro.url.pathname);
 const ui = t(lang).contact;
 const messages = JSON.stringify({ sending: ui.sending, success: ui.success, failure: ui.failure, errors: ui.errors });
-const input = 'mt-1 w-full rounded border border-slate-300 px-3 py-2';
+const input = 'field';
 ---
 
 <form id="contact-form" class="space-y-5" novalidate data-messages={messages}>
   <div>
-    <label for="name" class="block text-sm font-medium">{ui.name}</label>
+    <label for="name" class="block text-sm font-bold">{ui.name}</label>
     <input id="name" name="name" required maxlength="100" autocomplete="name" class={input} />
   </div>
   <div>
-    <label for="email" class="block text-sm font-medium">{ui.email}</label>
+    <label for="email" class="block text-sm font-bold">{ui.email}</label>
     <input id="email" name="email" type="email" required maxlength="254" autocomplete="email" class={input} />
   </div>
   <div>
-    <label for="topic" class="block text-sm font-medium">{ui.topic}</label>
+    <label for="topic" class="block text-sm font-bold">{ui.topic}</label>
     <select id="topic" name="topic" class={input}>
       {TOPICS.map((v) => <option value={v}>{ui.topics[v]}</option>)}
     </select>
   </div>
   <div>
-    <label for="message" class="block text-sm font-medium">{ui.message}</label>
+    <label for="message" class="block text-sm font-bold">{ui.message}</label>
     <textarea id="message" name="message" required minlength="10" maxlength="5000" rows="7" class={input}></textarea>
   </div>
   <!-- Honeypot -->
@@ -33,7 +33,7 @@ const input = 'mt-1 w-full rounded border border-slate-300 px-3 py-2';
     <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
   </div>
   <div class="cf-turnstile" data-sitekey={siteKey} data-language={lang}></div>
-  <button type="submit" class="w-full rounded bg-slate-900 px-5 py-3 text-white disabled:opacity-50 sm:w-auto">{ui.submit}</button>
+  <button type="submit" class="btn-primary w-full disabled:opacity-50 sm:w-auto">{ui.submit}</button>
   <p id="form-status" role="status" aria-live="polite" class="text-sm"></p>
   <noscript><p class="text-sm text-red-700">{ui.noscript}</p></noscript>
 </form>

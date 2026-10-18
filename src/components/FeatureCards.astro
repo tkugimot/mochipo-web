@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+
+interface Item { icon: Parameters<typeof Icon>[0]['name']; title: string; body: string }
+interface Props { title: string; eyebrow?: string; items: Item[] }
+const { title, eyebrow, items } = Astro.props;
+---
+
+<section class="py-14">
+  {eyebrow && <p class="eyebrow text-center">{eyebrow}</p>}
+  <h2 class="mt-2 text-center text-3xl font-bold sm:text-4xl">{title}</h2>
+  <ul class="mt-10 grid gap-5 sm:grid-cols-3">
+    {items.map((item) => (
+      <li class="card transition duration-200 motion-safe:hover:-translate-y-1 hover:shadow-lift">
+        <span class="flex size-12 items-center justify-center rounded-2xl bg-(--accent-soft) text-(--accent-strong)">
+          <Icon name={item.icon} class="size-6" />
+        </span>
+        <h3 class="mt-5 text-xl font-bold">{item.title}</h3>
+        <p class="mt-2 leading-7 text-ink-soft">{item.body}</p>
+      </li>
+    ))}
+  </ul>
+</section>

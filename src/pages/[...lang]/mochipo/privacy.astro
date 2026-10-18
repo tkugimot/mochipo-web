@@ -9,6 +9,6 @@ export const getStaticPaths = langStaticPaths;
 const entry = await getLegal(langFromPath(Astro.url.pathname), 'mochipo-privacy');
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.description} noindex={entry.data.draft}>
+<BaseLayout title={entry.data.title} description={entry.data.description} noindex={entry.data.draft} theme="mochipo">
   <LegalBody entry={entry} />
 </BaseLayout>
