@@ -1,41 +1,75 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import AppHero from '../../../components/AppHero.astro';
-import FeatureCards from '../../../components/FeatureCards.astro';
+import FeatureGroups from '../../../components/FeatureGroups.astro';
+import startJa from '../../../assets/mochipo/mochipo_start_ja.png';
+import startEn from '../../../assets/mochipo/mochipo_start_en.png';
+import homeJa from '../../../assets/mochipo/mochipo_home_ja.png';
+import homeEn from '../../../assets/mochipo/mochipo_home_en.png';
+import blockJa from '../../../assets/mochipo/mochipo_block_ja.png';
+import blockEn from '../../../assets/mochipo/mochipo_block_en.png';
+import statJa from '../../../assets/mochipo/mochipo_stat_ja.png';
+import statEn from '../../../assets/mochipo/mochipo_stat_en.png';
+import { MOCHIPO_APP_STORE_URL } from '../../../consts';
 import { langFromPath, langStaticPaths, localePath } from '../../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 
-// Placeholder copy: replace with the real LP text.
 const copy = {
   ja: {
     name: 'もち歩',
-    description: 'もち歩の紹介ページです。',
-    tagline: '【キャッチコピー】',
-    lead: '【ここにアプリの説明文】',
-    screenshot: 'スクリーンショット',
+    description: '歩数目標を達成するまで特定のアプリを使えなくする、歩く習慣づくりを支援するiOSアプリ。',
+    tagline: 'スマホを使いたかったら、まず歩く',
+    lead: '歩数目標を達成するまで特定のアプリを使えなくする、歩く習慣づくりを支援するiOSアプリ。',
+    cta: 'App Storeでダウンロード',
+    alts: { start: 'もち歩の起動画面', home: 'ホーム画面', block: 'ブロック中の画面', stat: '統計画面' },
+    conceptEyebrow: 'Concept',
+    concept: '「スマホを使いたい」という気持ちを、歩くモチベーションに変えること。',
     featuresEyebrow: 'Features',
     featuresTitle: 'もち歩の特徴',
-    features: [
-      { icon: 'walk', title: '【特徴1のタイトル】', body: '【特徴1の説明文】' },
-      { icon: 'pin', title: '【特徴2のタイトル】', body: '【特徴2の説明文】' },
-      { icon: 'sparkle', title: '【特徴3のタイトル】', body: '【特徴3の説明文】' },
+    features: {
+      step: { icon: 'walk', title: '歩数連動ブロック', body: '1日の目標歩数を設定し、達成するまで対象アプリをブロック。' },
+      unlock: { icon: 'sparkle', title: '達成後の解除', body: '目標歩数を達成すると、当日中は対象アプリを自由に使える。' },
+      ad: { icon: 'clock', title: '広告で一時解除', body: '報酬広告を視聴すると、15分間ブロックを解除できる。(プレミアムプランは広告なし)' },
+      apps: { icon: 'grid', title: '複数アプリ対応', body: '無料版は最大3アプリ、有料版は複数アプリ・カテゴリに対応。' },
+      stats: { icon: 'chart', title: '目標・統計管理', body: 'プレミアムプランでは利用状況の統計を確認できる。' },
+    },
+    plansEyebrow: 'Plans',
+    plansTitle: '無料版とプレミアムプラン',
+    plansHead: ['', '無料版', 'プレミアム'],
+    plans: [
+      ['対象アプリ', '最大3アプリ', '複数アプリ・カテゴリ'],
+      ['15分間の一時解除', '広告を視聴', '広告なし'],
+      ['利用状況の統計', '—', '確認できる'],
     ],
     terms: '利用規約',
     privacy: 'プライバシーポリシー',
   },
   en: {
     name: 'Mochipo',
-    description: 'Introducing Mochipo.',
-    tagline: '[Tagline]',
-    lead: '[App description goes here]',
-    screenshot: 'App screenshot',
+    description: 'An iOS app that helps you build a walking habit by blocking selected apps until you reach your daily step goal.',
+    tagline: 'Walk first, then use your phone',
+    lead: 'An iOS app that helps you build a walking habit by blocking selected apps until you reach your daily step goal.',
+    cta: 'Download on the App Store',
+    alts: { start: 'Mochipo launch screen', home: 'Home screen', block: 'Blocked screen', stat: 'Statistics screen' },
+    conceptEyebrow: 'Concept',
+    concept: 'Turn the urge to use your phone into the motivation to walk.',
     featuresEyebrow: 'Features',
-    featuresTitle: 'Features',
-    features: [
-      { icon: 'walk', title: '[Feature 1 title]', body: '[Feature 1 description]' },
-      { icon: 'pin', title: '[Feature 2 title]', body: '[Feature 2 description]' },
-      { icon: 'sparkle', title: '[Feature 3 title]', body: '[Feature 3 description]' },
+    featuresTitle: 'What Mochipo does',
+    features: {
+      step: { icon: 'walk', title: 'Step-linked blocking', body: 'Set a daily step goal, and the selected apps stay blocked until you reach it.' },
+      unlock: { icon: 'sparkle', title: 'Unlock once you reach it', body: 'Once you hit your step goal, you can use the selected apps freely for the rest of the day.' },
+      ad: { icon: 'clock', title: 'Temporary unlock with an ad', body: 'Watch a rewarded ad to lift the block for 15 minutes. (No ads with the Premium plan.)' },
+      apps: { icon: 'grid', title: 'Multiple apps', body: 'The free version supports up to 3 apps; the paid version supports multiple apps and categories.' },
+      stats: { icon: 'chart', title: 'Goals and statistics', body: 'With the Premium plan, you can check statistics on your usage.' },
+    },
+    plansEyebrow: 'Plans',
+    plansTitle: 'Free and Premium',
+    plansHead: ['', 'Free', 'Premium'],
+    plans: [
+      ['Target apps', 'Up to 3 apps', 'Multiple apps and categories'],
+      ['15-minute temporary unlock', 'Watch an ad', 'No ads'],
+      ['Usage statistics', '—', 'Available'],
     ],
     terms: 'Terms of Service',
     privacy: 'Privacy Policy',
@@ -43,11 +77,54 @@ const copy = {
 } as const;
 const lang = langFromPath(Astro.url.pathname);
 const c = copy[lang];
+const img = lang === 'ja' ? { start: startJa, home: homeJa, block: blockJa, stat: statJa } : { start: startEn, home: homeEn, block: blockEn, stat: statEn };
+const f = c.features;
+const groups = [
+  { image: img.block, alt: c.alts.block, points: [f.step, f.unlock] },
+  { image: img.home, alt: c.alts.home, points: [f.ad, f.apps] },
+  { image: img.stat, alt: c.alts.stat, points: [f.stats] },
+].map((g) => ({ ...g, points: g.points.map((p) => ({ ...p })) }));
 ---
 
 <BaseLayout title={c.name} description={c.description} theme="mochipo" wide>
-  <AppHero name={c.name} tagline={c.tagline} lead={c.lead} screenshotLabel={c.screenshot} />
-  <FeatureCards eyebrow={c.featuresEyebrow} title={c.featuresTitle} items={c.features.map((f) => ({ ...f }))} />
+  <AppHero
+    name={c.name}
+    tagline={c.tagline}
+    lead={c.lead}
+    primary={MOCHIPO_APP_STORE_URL ? { href: MOCHIPO_APP_STORE_URL, label: c.cta } : undefined}
+    screenshots={[{ src: img.start, alt: c.alts.start }]}
+  />
+
+  <section class="my-10 overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#1c1713] via-[#3a2312] to-[#b4500b] px-6 py-14 text-center text-white sm:px-12">
+    <p class="eyebrow !text-[#ffc58a]">{c.conceptEyebrow}</p>
+    <p class="mx-auto mt-4 max-w-3xl font-display text-2xl leading-relaxed font-bold sm:text-4xl">{c.concept}</p>
+  </section>
+
+  <FeatureGroups eyebrow={c.featuresEyebrow} title={c.featuresTitle} groups={groups} />
+
+  <section class="py-10">
+    <p class="eyebrow text-center">{c.plansEyebrow}</p>
+    <h2 class="mt-2 text-center text-3xl font-bold sm:text-4xl">{c.plansTitle}</h2>
+    <div class="card mx-auto mt-8 max-w-3xl overflow-x-auto !p-0">
+      <table class="w-full text-left text-sm sm:text-base">
+        <thead>
+          <tr class="bg-(--accent-soft)">
+            {c.plansHead.map((h) => <th scope="col" class="px-4 py-4 font-bold sm:px-6">{h}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {c.plans.map((row) => (
+            <tr class="border-t border-black/5">
+              <th scope="row" class="px-4 py-4 font-bold sm:px-6">{row[0]}</th>
+              <td class="px-4 py-4 text-ink-soft sm:px-6">{row[1]}</td>
+              <td class="px-4 py-4 font-medium sm:px-6">{row[2]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <p class="flex justify-center gap-8 py-6 text-sm">
     <a href={localePath(lang, '/mochipo/terms/')} class="link">{c.terms}</a>
     <a href={localePath(lang, '/mochipo/privacy/')} class="link">{c.privacy}</a>

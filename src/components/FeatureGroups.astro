@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+
+interface Point { icon: Parameters<typeof Icon>[0]['name']; title: string; body: string }
+interface Group { image: ImageMetadata; alt: string; points: Point[] }
+interface Props { title: string; eyebrow?: string; groups: Group[] }
+const { title, eyebrow, groups } = Astro.props;
+---
+
+<section class="py-14">
+  {eyebrow && <p class="eyebrow text-center">{eyebrow}</p>}
+  <h2 class="mt-2 text-center text-3xl font-bold sm:text-4xl">{title}</h2>
+  <div class="mt-14 space-y-20 sm:space-y-28">
+    {groups.map((group, i) => (
+      <div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
+        <ul class:list={['space-y-8', i % 2 === 0 ? 'md:order-1' : 'md:order-2']}>
+          {group.points.map((point) => (
+            <li class="flex gap-4">
+              <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-(--accent-soft) text-(--accent-strong)">
+                <Icon name={point.icon} class="size-6" />
+              </span>
+              <div>
+                <h3 class="text-xl font-bold sm:text-2xl">{point.title}</h3>
+                <p class="mt-1 leading-8 text-ink-soft">{point.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class:list={['relative mx-auto w-52 sm:w-60', i % 2 === 0 ? 'md:order-2' : 'md:order-1']}>
+          <div aria-hidden="true" class="absolute -inset-8 -z-10 rounded-full bg-(--accent-soft) blur-3xl"></div>
+          <Image
+            src={group.image}
+            alt={group.alt}
+            width={480}
+            densities={[1, 2]}
+            loading="lazy"
+            decoding="async"
+            class:list={['h-auto w-full [filter:drop-shadow(0_24px_28px_rgb(60_30_10/0.3))]', i % 2 === 0 ? 'rotate-2' : '-rotate-2']}
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
