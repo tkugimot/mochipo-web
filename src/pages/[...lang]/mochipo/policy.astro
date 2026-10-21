@@ -6,7 +6,7 @@ import { langFromPath, langStaticPaths } from '../../../i18n/ui';
 
 export const getStaticPaths = langStaticPaths;
 
-const entry = await getLegal(langFromPath(Astro.url.pathname), 'mochipo-privacy');
+const entry = await getLegal(langFromPath(Astro.url.pathname), 'mochipo-policy');
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} noindex={entry.data.draft} theme="mochipo">

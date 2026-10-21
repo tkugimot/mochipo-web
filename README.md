@@ -14,7 +14,7 @@ Astro 7 (静的サイト) + Cloudflare Workers。ブログ / カテゴリー / �
 |---|---|
 | `/` | 時もち LP |
 | `/mochipo/` | mochipo(日本語名: もち歩)LP |
-| `/mochipo/terms/`, `/mochipo/privacy/` | もち歩(mochipo)の利用規約 / プライバシーポリシー |
+| `/mochipo/policy/` | もち歩(mochipo)の利用規約・プライバシーポリシー |
 | `/articles/` , `/articles/<slug>/` | 記事(両アプリ共通。`app` で時もち / mochipo / 運営を区別) |
 | `/articles/policy/` | 時もちの利用規約・プライバシーポリシー(既存 URL) |
 | `/aboutus/`, `/contact/` | 運営者情報 / お問い合わせ(トピックでアプリを選択) |
